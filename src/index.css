@@ -36,10 +36,10 @@ ul {
 ul li  {
     display: inline-block;
     list-style: none;
-    padding-top: 5px;
-    height: 145px;
+    padding: 5px 3px 3px 3px;
+    height: 155px;
     width: 100px;
-    /*float: left;**/
+    float: left;
     cursor: pointer;
     background-color: whitesmoke;
     transition:0.3s;

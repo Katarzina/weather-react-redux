@@ -90,7 +90,7 @@ const temperatureMax = (forecast, focusedDay) => {
 class WeatherForecast extends Component {
 
 	  static propTypes = {
-        forecast: PropTypes.object.isRequired
+        forecast: PropTypes.array.isRequired
     }
 
     state = {
@@ -120,13 +120,14 @@ class WeatherForecast extends Component {
             let style = '';
             if(self.state.focused === index) style = 'focused';
             let icon = iconWeather(day.weather[0].icon);
+            console.log(day.tempMax);
 					return <li key={index} className={style} onClick={self.clicked.bind(self, index)}>
 						     <div>
 							   <div>{day.dayName}</div>
 							   <div className="month">{day.dayDate}.{day.dayMonth}.</div>
 						  	 <div>min. <span>{day.tempMin > 0 ? "+" : "" }{day.tempMin}°</span></div>
-							   <div><img src={icon} alt="weather"/> </div>
-							   <div>max. <span>{day.tempMin > 0 ? "+" : "" }{day.tempMax}°</span></div>
+							   <div><img src={icon} alt="weather" /> </div>
+							   <div>max. <span>{day.tempMax> 0 ? "+" : "" }{day.tempMax}°</span></div>
 							   </div>
 					       </li> })
 					}
