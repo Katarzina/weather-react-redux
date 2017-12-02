@@ -1,0 +1,82 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.app {
+    text-align: center;
+}
+
+.form-search {
+    padding: 20px 30px 30px;
+    overflow: hidden;
+}
+
+.focusedDay {
+    margin: 10px 0;
+}
+
+.form-search input[type="text"] {
+    width: 53%;
+    padding: 6px;
+    font-size: 18px;
+}
+
+.error , loading {
+    font-size: 18px;
+}
+
+ul {
+   display: inline-block;
+   padding: 0 5px;
+   margin: 0 auto;
+}
+
+ul li  {
+    display: inline-block;
+    list-style: none;
+    padding-top: 5px;
+    height: 145px;
+    width: 100px;
+    /*float: left;**/
+    cursor: pointer;
+    background-color: whitesmoke;
+    transition:0.3s;
+}
+
+ul li:hover {
+    background-color: #3F51B5;
+}
+
+ul li.focused{
+    background-color: #3F51B5;
+}
+
+.forecast-table {
+    margin: 0 auto;
+}
+
+thead {
+    background: #335373;
+    color: #FFF;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.forecast-table thead th {
+    font-size: 13px;
+    padding: 10px 7px;
+    color: #fff;
+}
+
+.month {
+	display: inline-block;
+    border-bottom: 1px dotted #000;
+    line-height: 14px;
+}
+
