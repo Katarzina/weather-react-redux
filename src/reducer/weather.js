@@ -35,7 +35,8 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isInvalid: true,
-                error: action.error
+                isLoading: false,
+                error: payload
             }
         case RECEIVE + FORECAST:
             return {
