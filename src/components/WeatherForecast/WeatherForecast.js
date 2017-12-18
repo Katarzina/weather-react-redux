@@ -17,18 +17,18 @@ const formatData = (forecast) => {
 	let nextDay = dateToString(forecast[0].dt, 1000);
 	const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-  return forecast.filter((day, index) => {
-    let previousDay = nextDay;
-		let dateString = dateToString(day.dt, 1000);
-    nextDay = dateString;
+    return forecast.filter((day, index) => {
+        let previousDay = nextDay;
+	    let dateString = dateToString(day.dt, 1000);
+        nextDay = dateString;
 		return dateString.indexOf(previousDay) < 0 || index === 0
 	})
 	.map((day) => {
-	     	day.dayName = dayNames[new Date(day.dt * 1000).getDay()]
+	    day.dayName = dayNames[new Date(day.dt * 1000).getDay()]
         day.dayDate = new Date(day.dt * 1000).getDate()
-			  day.tempMin = temperatureMin(forecast,day.dayDate)
+		day.tempMin = temperatureMin(forecast,day.dayDate)
         day.tempMax = temperatureMax(forecast,day.dayDate)
-			  day.dayMonth = new Date(day.dt * 1000).getMonth()+1
+		day.dayMonth = new Date(day.dt * 1000).getMonth() + 1
 		return day
 	})
 }
@@ -68,7 +68,7 @@ const formatDay = (forecast, focusedDay) => {
 
 const temperatureMin = (forecast, focusedDay) => {
     const dataFromFocusedDay = formatDay(forecast,focusedDay.toString())
-		let minTemperature = []
+	let minTemperature = []
     dataFromFocusedDay.forEach(function(list) {
     	   minTemperature.push(list.main.temp_min)
 		})
@@ -80,7 +80,7 @@ const temperatureMin = (forecast, focusedDay) => {
 const temperatureMax = (forecast, focusedDay) => {
     const dataFromFocusedDay = formatDay(forecast,focusedDay.toString())
     let maxTemperature = []
-     dataFromFocusedDay.forEach(function(list) {
+    dataFromFocusedDay.forEach(function(list) {
         maxTemperature.push(list.main.temp_max)
     })
     return Math.max.apply(null, maxTemperature)
@@ -89,7 +89,7 @@ const temperatureMax = (forecast, focusedDay) => {
 
 class WeatherForecast extends Component {
 
-	  static propTypes = {
+	static propTypes = {
         forecast: PropTypes.array.isRequired
     }
 
@@ -109,32 +109,29 @@ class WeatherForecast extends Component {
 
 	render() {
 
-      const { forecast } = this.props
-      let forecasts = formatData(forecast)
-      let self = this
+        const { forecast } = this.props
+        let forecasts = formatData(forecast)
+        let self = this
 		return (
-
-			<div className="WeatherForecast">
+        <div>
         <ul>
-          {forecasts.map(function(day, index) {
-            let style = '';
-            if(self.state.focused === index) style = 'focused';
-            let icon = iconWeather(day.weather[0].icon);
-            console.log(day.tempMax);
+            {forecasts.map(function(day, index) {
+                let style = '';
+                if(self.state.focused === index) style = 'focused';
+                let icon = iconWeather(day.weather[0].icon);
 					return <li key={index} className={style} onClick={self.clicked.bind(self, index)}>
-						     <div>
-							   <div>{day.dayName}</div>
-							   <div className="month">{day.dayDate}.{day.dayMonth}.</div>
-						  	 <div>min. <span>{day.tempMin > 0 ? "+" : "" }{day.tempMin}°</span></div>
-							   <div><img src={icon} alt="weather" /> </div>
-							   <div>max. <span>{day.tempMax> 0 ? "+" : "" }{day.tempMax}°</span></div>
-							   </div>
-					       </li> })
+                        <div>
+						    <div>{day.dayName}</div>
+							<div className="month">{day.dayDate}.{day.dayMonth}.</div>
+						  	<div>min. <span>{day.tempMin > 0 ? "+" : "" }{day.tempMin}°</span></div>
+							<div><img src={icon} alt="weather" /> </div>
+							<div>max. <span>{day.tempMax> 0 ? "+" : "" }{day.tempMax}°</span></div>
+                        </div>
+					    </li> })
 					}
-			  </ul>
-				<ExtendedForecast forecast={forecast} focusedDay={this.state.focusedDay.toString()}/>
-		    </div>
-
+		</ul>
+        <ExtendedForecast forecast={forecast} focusedDay={this.state.focusedDay.toString()}/>
+		</div>
 		)
 	}
 }

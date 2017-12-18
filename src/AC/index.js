@@ -38,8 +38,7 @@ export function fetchApi(params, nameFunction) {
         dispatch(loading(LOADING_WEATHER));
         dispatch(requestStart());
 
-        return setTimeout( () => {
-                fetch(url)
+        return fetch(url)
                     .then(response => {
                         if (response.status >= 400) {
                             throw new Error(response.statusText)
@@ -57,7 +56,6 @@ export function fetchApi(params, nameFunction) {
                         console.log('error: ', error);
                         dispatch(requestFailed(error.toString()))
                     })
-            }, 2000)
     }
 
 }

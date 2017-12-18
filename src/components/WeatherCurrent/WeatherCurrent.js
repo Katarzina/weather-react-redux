@@ -11,7 +11,7 @@ class WeatherCurrent extends Component {
     render() {
         const { current } = this.props
         return (
-            <div className="WeatherCurrent">
+            <div>
                 <div>
                     <h2 className="city">{current.name} - {current.sys.country}</h2>
                         <div className="current">NOW</div>
