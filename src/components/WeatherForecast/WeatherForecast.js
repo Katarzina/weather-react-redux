@@ -4,7 +4,7 @@ import ExtendedForecast from './ExtendedForecast'
 import { iconWeather } from '../../share/share'
 
 const dateToString = (date, multiplier = 1) => {
-	return new Date(date * multiplier).toDateString()
+    return new Date(date * multiplier).toDateString()
 }
 
 /**
@@ -46,9 +46,9 @@ const firstDay = (forecast) => {
 */
 
 const dayMonth = (forecast, index) => {
-      let date = new Date(forecast[0].dt * 1000)
-      date.setDate(date.getDate() + index)
-      return date.getDate()
+    let date = new Date(forecast[0].dt * 1000)
+    date.setDate(date.getDate() + index)
+    return date.getDate()
 }
 
 /**
@@ -71,7 +71,7 @@ const temperatureMin = (forecast, focusedDay) => {
 	let minTemperature = []
     dataFromFocusedDay.forEach(function(list) {
     	   minTemperature.push(list.main.temp_min)
-		})
+	})
     return Math.min.apply(null, minTemperature)
 }
 /**
@@ -95,7 +95,7 @@ class WeatherForecast extends Component {
 
     state = {
         focused: 0,
-		    focusedDay:  firstDay(this.props.forecast)
+		focusedDay:  firstDay(this.props.forecast)
     }
 
     clicked = (index) => {
@@ -129,7 +129,7 @@ class WeatherForecast extends Component {
                         </div>
 					    </li> })
 					}
-		</ul>
+	    </ul>
         <ExtendedForecast forecast={forecast} focusedDay={this.state.focusedDay.toString()}/>
 		</div>
 		)

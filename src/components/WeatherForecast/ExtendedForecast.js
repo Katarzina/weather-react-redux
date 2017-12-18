@@ -51,10 +51,10 @@ class ExtendedForecast extends Component {
  						</tr>
                     }).filter((date) => {
                         return date
-						        })
-						}
+						})
+				}
 					</tbody>
-					</table>
+				</table>
 		    </div>
 
 		)
