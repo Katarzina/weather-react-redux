@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import { PropTypes } from 'prop-types'
-import { iconWeather } from '../../share/share'
+import React, {Component} from 'react';
+import {PropTypes} from 'prop-types';
+import {iconWeather} from '../../share/share';
 
 class WeatherCurrent extends Component {
 
@@ -9,16 +9,21 @@ class WeatherCurrent extends Component {
     }
 
     render() {
-        const { current } = this.props
+        const { current : {name,
+                           main: { temp, temp_min, temp_max },
+                           sys: {country},
+                           weather
+                           } = {}
+              } = this.props
         return (
             <div>
                 <div>
-                    <h2 className="city">{current.name} - {current.sys.country}</h2>
+                    <h2 className="city">{name} - {country}</h2>
                         <div className="current">NOW</div>
-                        <div className="month">{current.main.temp}</div>
-                        <div className="min">мін. <span>{current.main.temp_min > 0 ? "+" : "" }{current.main.temp_min}°</span></div>
-                        <div className="max">макс. <span>{current.main.temp_max > 0 ? "+" : "" }{current.main.temp_max}°</span></div>
-                        <div><img src={iconWeather(current.weather[0].icon)} alt="weather"/></div>
+                        <div className="month">{temp}</div>
+                        <div className="min">мін. <span>{temp_min > 0 ? '+' : '' }{temp_min}°</span></div>
+                        <div className="max">макс. <span>{temp_max > 0 ? '+' : '' }{temp_max}°</span></div>
+                        <div><img src={iconWeather(weather[0].icon)} alt="weather"/></div>
                 </div>
             </div>
         )
@@ -26,4 +31,4 @@ class WeatherCurrent extends Component {
 }
 
 
-export default WeatherCurrent
+export default WeatherCurrent;

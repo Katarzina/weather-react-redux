@@ -2,7 +2,7 @@ import {
     REQUEST, START, FAILED, RECEIVE, WEATHER,
     FORECAST, BASE_URL, APP_ID
 } from '../constants'
-import {LOADING, LOADING_WEATHER, LOADED} from "../reducer/loading";
+import {LOADING, LOADING_WEATHER, LOADED} from '../reducer/loading';
 
 export const loading = (payload) => ({type: LOADING, payload})
 export const loaded = (payload) => ({type: LOADED, payload})
@@ -24,13 +24,12 @@ export function receiveWeather(payload, type) {
     return {
         type,
         payload
-    }
+    };
 }
-
 
 export function fetchApi(params, nameFunction) {
     const url = `${BASE_URL}/${nameFunction}?${params}&units=metric&appid=${APP_ID}`
-
+    console.log(url)
     const isWeather = (fnName) => fnName === 'weather'
 
     return function (dispatch) {
@@ -41,9 +40,9 @@ export function fetchApi(params, nameFunction) {
         return fetch(url)
                     .then(response => {
                         if (response.status >= 400) {
-                            throw new Error(response.statusText)
+                            throw new Error(response.statusText);
                         }
-                        return response.json()
+                        return response.json();
                     })
                     .then(json => (
                         isWeather(nameFunction)
@@ -54,9 +53,9 @@ export function fetchApi(params, nameFunction) {
                     .then(dispatch(loaded(LOADING_WEATHER)))
                     .catch(error => {
                         console.log('error: ', error);
-                        dispatch(requestFailed(error.toString()))
-                    })
-    }
+                        dispatch(requestFailed(error.toString()));
+                    });
+    };
 
 }
 

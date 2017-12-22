@@ -1,33 +1,36 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import { fetchApi } from '../AC'
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {fetchApi} from '../AC';
 
 class Search extends Component {
 
-  	static propTypes = {
+	static propTypes = {
         dispatch: PropTypes.func.isRequired
     }
 
     onClickHandler = (ev) => {
-		ev.preventDefault()
-		const input = this.refs.town
-		if (!input.value.trim()) return
-		// Update weather forecast with user input
+        ev.preventDefault()
         const { dispatch } = this.props;
-        dispatch(fetchApi(`q=${input.value}`, 'weather'))
-		dispatch(fetchApi(`q=${input.value}`, 'forecast'))
-		input.value = ''
-	}
+        const input = this._inputEl.value
+        if (!input.trim()) return
+        // Update weather forecast with user input
+        dispatch(fetchApi(`q=${input}`, 'weather'))
+        dispatch(fetchApi(`q=${input}`, 'forecast'))
+        this._inputEl.value = ''
+    }
 
-
-	render() {
-		return (
+    render() {
+        return (
 			<form className="form-search" onSubmit={this.onClickHandler}>
-				<input type="text" placeholder="Enter city" ref="town" />
+				<input
+					type="text"
+					placeholder="Enter city"
+					ref={(node) => {this._inputEl = node}}
+				/>
 			</form>
-		)
-	}
+        )
+    }
 }
 
-export default connect()(Search)
+export default connect()(Search);

@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import Timestamp from 'react-timestamp'
-import { iconWeather } from '../../share/share'
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import Timestamp from 'react-timestamp';
+import {iconWeather} from '../../share/share';
 
 /**
 * Filter forecast data by focused day
@@ -10,7 +10,7 @@ import { iconWeather } from '../../share/share'
 const formatDay = (forecast, focusedDay) => {
     return forecast.filter((day) => {
         let dateString = new Date(day.dt * 1000).getDate().toString()
-        return dateString === focusedDay
+        return dateString === focusedDay;
     })
 }
 
@@ -23,7 +23,7 @@ class ExtendedForecast extends Component {
 
 	render() {
 		const { forecast, focusedDay } = this.props
-		let focusedData = formatDay(forecast,focusedDay)
+		let focusedData = formatDay(forecast, focusedDay)
 		return (
 			<div>
 				<div className="focusedDay">Forecast - {focusedDay}</div>
@@ -39,26 +39,25 @@ class ExtendedForecast extends Component {
 						</tr>
 					</thead>
 					<tbody>
-            {focusedData.map((list, index) => {
-              	let icon = iconWeather(list.weather[0].icon);
-              	return <tr key={index}>
+            {focusedData.map((list) => {
+				let icon = iconWeather(list.weather[0].icon);
+				return <tr key={list.dt}>
 						<td><Timestamp time={list.dt} key={list.dt} format='time' /></td>
 						<td><img src={icon} alt="weather"/></td>
-						<td>{list.main.temp > 0 ? "+" : "" }{list.main.temp}°</td>
+						<td>{list.main.temp > 0 ? '+' : '' }{list.main.temp}°</td>
 						<td>{list.wind.speed} mps</td>
 						<td>{list.main.humidity}%</td>
 						<td>{list.main.pressure}</td>
- 						</tr>
-                    }).filter((date) => {
+				</tr>
+				}).filter((date) => {
                         return date
 						})
 				}
 					</tbody>
 				</table>
-		    </div>
-
+			</div>
 		)
 	}
 }
 
-export default ExtendedForecast
+export default ExtendedForecast;

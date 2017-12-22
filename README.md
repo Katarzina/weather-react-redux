@@ -2,6 +2,8 @@
 # React Redux Weather
 A simple weather app using React, Redux, and api.openweathermap.org This is a portfolio project.
 
+Demo: http://short-furniture.surge.sh/
+
 ### Setup
 
 Clone the repo.

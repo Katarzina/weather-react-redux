@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "author": "Kateryna Parfenova",
-  "homepage": "http://katarzina.github.io/weather-react-redux",
   "dependencies": {
     "prop-types": "^15.6.0",
     "react": "^16.1.1",

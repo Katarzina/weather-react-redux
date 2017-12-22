@@ -11,7 +11,8 @@ import { isLoaded } from '../reducer/loading'
 class Weather extends Component {
 
     static propTypes = {
-        weather: PropTypes.object
+        weather: PropTypes.object,
+        isLoaded: PropTypes.bool
     }
 
     render() {
@@ -23,6 +24,7 @@ class Weather extends Component {
         }
 
         if (isInvalid) {
+            console.log('error', {error})
             return (
                 <Error error={error} />
             )
