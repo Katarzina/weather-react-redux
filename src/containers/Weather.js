@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import WeatherCurrent from '../components/WeatherCurrent/WeatherCurrent'
-import WeatherForecast from '../components/WeatherForecast/WeatherForecast'
-import Loading from '../components/Loading/Loading'
-import Error from '../components/Error/Error'
-import { isLoaded } from '../reducer/loading'
+import WeatherCurrent from '../components/WeatherCurrent'
+import WeatherForecast from './WeatherForecast'
+import Loading from '../components/Loading'
+import Error from '../components/Error'
+import {isLoaded} from '../reducer/loading'
 
 
 class Weather extends Component {
@@ -24,20 +24,19 @@ class Weather extends Component {
         }
 
         if (isInvalid) {
-            console.log('error', {error})
             return (
                 <Error error={error} />
             )
         }
 
-       if ((!current || !forecast) && !isLoaded) {
+        if ((!current || !forecast) && !isLoaded) {
             return null
         }
 
         return (
             <div className="Weather">
                 <WeatherCurrent current={current} />
-                <WeatherForecast forecast={forecast.list} />
+                <WeatherForecast />
             </div>
         );
     }

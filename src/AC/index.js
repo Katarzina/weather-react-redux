@@ -1,6 +1,6 @@
 import {
     REQUEST, START, FAILED, RECEIVE, WEATHER,
-    FORECAST, BASE_URL, APP_ID
+    FORECAST, BASE_URL, APP_ID, UPDATE, FOCUS
 } from '../constants'
 import {LOADING, LOADING_WEATHER, LOADED} from '../reducer/loading';
 
@@ -27,9 +27,16 @@ export function receiveWeather(payload, type) {
     };
 }
 
+export function updateFocus(payload) {
+    console.log(payload)
+    return {
+        type: UPDATE + FOCUS,
+        payload
+    };
+}
+
 export function fetchApi(params, nameFunction) {
     const url = `${BASE_URL}/${nameFunction}?${params}&units=metric&appid=${APP_ID}`
-    console.log(url)
     const isWeather = (fnName) => fnName === 'weather'
 
     return function (dispatch) {
@@ -52,7 +59,6 @@ export function fetchApi(params, nameFunction) {
                     )
                     .then(dispatch(loaded(LOADING_WEATHER)))
                     .catch(error => {
-                        console.log('error: ', error);
                         dispatch(requestFailed(error.toString()));
                     });
     };

@@ -24,9 +24,9 @@ class Search extends Component {
         return (
 			<form className="form-search" onSubmit={this.onClickHandler}>
 				<input
-					type="text"
-					placeholder="Enter city"
-					ref={(node) => {this._inputEl = node}}
+				type="text"
+				placeholder="Enter city"
+				ref={(node) => {this._inputEl = node}}
 				/>
 			</form>
         )
