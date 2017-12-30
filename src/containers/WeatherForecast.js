@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {updateFocus} from '../AC'
+import {updateFocus} from '../AC';
 import ExtendedForecast from '../components/ExtendedForecast';
 import {iconWeather, plusDecoration, dateToString, getDateFormat} from '../share/share';
-import {stateSelector, forecastSelector} from '../reducer/weather'
-import {MULTIPLIER} from '../constants'
+import {stateSelector, forecastSelector} from '../reducer/weather';
+import {MULTIPLIER} from '../constants';
 
 /**
  * Filter forecast data returns one object for the next five days
@@ -81,8 +81,8 @@ const temperatureMax = (forecast, focusedDay) => {
 class WeatherForecast extends Component {
 
 	static propTypes = {
-        forecast: PropTypes.array.isRequired,
-        weather: PropTypes.object.isRequired,
+        forecast: PropTypes.object,
+        weather: PropTypes.object,
         updateFocus: PropTypes.func
     }
 
@@ -96,7 +96,8 @@ class WeatherForecast extends Component {
 	render() {
 
         const { weather : { forecast, focused } = {} } = this.props
-        let forecasts = formatData(forecast.list)
+        if (!forecast) { return null }
+        const forecasts = formatData(forecast.list)
         let self = this
 		return (
         <div>

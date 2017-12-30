@@ -1,4 +1,3 @@
-
 // const
 export const LOADING_WEATHER = 1;
 

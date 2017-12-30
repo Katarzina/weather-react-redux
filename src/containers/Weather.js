@@ -12,9 +12,10 @@ class Weather extends Component {
 
     static propTypes = {
         weather: PropTypes.object,
-        isLoaded: PropTypes.bool
+        isLoaded: PropTypes.bool,
+        current: PropTypes.array,
+        forecast: PropTypes.array
     }
-
     render() {
         const {isLoaded, weather: {error, current, forecast, isInvalid, isLoading} = {}} = this.props
         if (isLoading) {
@@ -35,7 +36,7 @@ class Weather extends Component {
 
         return (
             <div className="Weather">
-                <WeatherCurrent current={current} />
+                <WeatherCurrent />
                 <WeatherForecast />
             </div>
         );
@@ -44,6 +45,6 @@ class Weather extends Component {
 
 export default connect(({loading, weather}) => ({
     isLoaded : isLoaded(loading),
-    weather
-}))(Weather)
+    weather,
+}))(Weather);
 

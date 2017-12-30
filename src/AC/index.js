@@ -1,49 +1,41 @@
 import {
     REQUEST, START, FAILED, RECEIVE, WEATHER,
     FORECAST, BASE_URL, APP_ID, UPDATE, FOCUS
-} from '../constants'
+} from '../constants';
 import {LOADING, LOADING_WEATHER, LOADED} from '../reducer/loading';
 
 export const loading = (payload) => ({type: LOADING, payload})
 export const loaded = (payload) => ({type: LOADED, payload})
 
-export function requestStart() {
-    return {
-        type: REQUEST + START,
-    }
-}
+export const requestStart = () => ({
+        type: REQUEST + START
+})
 
-export function requestFailed(error) {
-    return {
+export const requestFailed = (error) => ({
         type: REQUEST + FAILED,
         error
-    }
-}
+})
 
-export function receiveWeather(payload, type) {
-    return {
+export const receiveWeather = (payload, type) => ({
         type,
         payload
-    };
-}
+})
 
-export function updateFocus(payload) {
-    console.log(payload)
-    return {
+export const updateFocus = (payload) => ({
         type: UPDATE + FOCUS,
         payload
-    };
-}
+})
 
-export function fetchApi(params, nameFunction) {
+export const fetchApi = (params, nameFunction) => {
+
     const url = `${BASE_URL}/${nameFunction}?${params}&units=metric&appid=${APP_ID}`
     const isWeather = (fnName) => fnName === 'weather'
 
-    return function (dispatch) {
+    return (dispatch) => {
 
         dispatch(loading(LOADING_WEATHER));
         dispatch(requestStart());
-
+        console.log(url)
         return fetch(url)
                     .then(response => {
                         if (response.status >= 400) {
@@ -57,7 +49,7 @@ export function fetchApi(params, nameFunction) {
                             : dispatch(receiveWeather(json, RECEIVE + FORECAST))
                         )
                     )
-                    .then(dispatch(loaded(LOADING_WEATHER)))
+                    .then(_ => dispatch(loaded(LOADING_WEATHER)))
                     .catch(error => {
                         dispatch(requestFailed(error.toString()));
                     });

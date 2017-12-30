@@ -57,6 +57,7 @@ export default (state = initialState, action) => {
 };
 
 export const stateSelector = (state) => state['weather'];
-export const forecastSelector = createSelector(stateSelector, (banks) => banks['forecast']);
+export const forecastSelector = createSelector(stateSelector, (weather) => weather['forecast']);
+
 
 
