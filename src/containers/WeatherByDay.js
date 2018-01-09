@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {updateFocus} from '../AC';
-import ExtendedForecast from '../components/ExtendedForecast';
 import {iconWeather, plusDecoration, dateToString, getDateFormat} from '../share/share';
 import {stateSelector, forecastSelector} from '../reducer/weather';
 import {MULTIPLIER} from '../constants';
@@ -32,31 +31,17 @@ const formatData = (forecast) => {
 		return day;
 	});
 }
-
-/**
-* Return focused day from forecast list
-*/
-
-const dayOfMonth = (forecast, index) => {
-    let date = getDateFormat(forecast[0].dt, MULTIPLIER)
-    date.setDate(date.getDate() + index)
-    return date.getDate().toString();
-}
-
 /**
 * Filter forecast data by focused day
 */
-
 const formatDay = (forecast, focusedDay) => {
     return forecast.filter(({dt}) => {
         return getDateFormat(dt, MULTIPLIER).getDate().toString() === focusedDay;
     })
 }
-
 /**
  * Calculate min temp from focused day
  */
-
 const temperatureMin = (forecast, focusedDay) => {
     const dataFromFocusedDay = formatDay(forecast, focusedDay.toString())
 	let minTemperature = []
@@ -78,7 +63,7 @@ const temperatureMax = (forecast, focusedDay) => {
 }
 
 
-class WeatherForecast extends Component {
+class WeatherByDay extends Component {
 
 	static propTypes = {
         forecast: PropTypes.object,
@@ -93,38 +78,28 @@ class WeatherForecast extends Component {
         return false
     }
 
-    getBody = (forecasts, focused) => {
-	    console.log(forecasts)
-        forecasts.map(({dayName, dayDate, dayMonth, tempMin, tempMax, weather}, index) => {
-	        console.log(dayName, focused, index)
-            let style = '';
-            if( focused === index) style = 'focused';
-            return (
-                <li key={index} className={style} onClick={this.clicked(index)}>
-                <div>{dayName}</div>
-                <div className="month">{dayDate}.{dayMonth}.</div>
-                <div>min. <span>{plusDecoration(tempMin)}{tempMin}°</span></div>
-                <div><img src={iconWeather(weather[0].icon)} alt="weather" /> </div>
-                <div>max. <span>{plusDecoration(tempMax)}{tempMax}°</span></div>
-            </li>
-            )
-        });
-    }
-
-
-
 	render() {
 
         const { weather : { forecast, focused } = {} } = this.props
         if (!forecast) { return null }
         const forecasts = formatData(forecast.list)
-        console.log("result",this.getBody(forecasts, focused))
 		return (
         <div>
-        <ul>
-        {this.getBody(forecasts, focused)}
-        </ul>
-        <ExtendedForecast forecast={forecast.list} focusedDay={dayOfMonth(forecast.list, focused)}/>
+          <ul>
+            {forecasts.map(({dayName, dayDate, dayMonth, tempMin, tempMax, weather}, index) => {
+            let style = '';
+            if( focused === index) style = 'focused';
+            return (
+            <li key={index} className={style} onClick={this.clicked(index)}>
+            <div>{dayName}</div>
+            <div className="month">{dayDate}.{dayMonth}.</div>
+            <div>min. <span>{plusDecoration(tempMin)}{tempMin}°</span></div>
+            <div><img src={iconWeather(weather[0].icon)} alt="weather" /> </div>
+            <div>max. <span>{plusDecoration(tempMax)}{tempMax}°</span></div>
+            </li>
+            )
+            })}
+          </ul>
         </div>
 		);
 	}
@@ -135,4 +110,4 @@ export default connect(
         weather: stateSelector(state),
         forecast : forecastSelector(state)
     })
-    , {updateFocus})(WeatherForecast);
+    , {updateFocus})(WeatherByDay);

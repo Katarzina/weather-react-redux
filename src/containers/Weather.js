@@ -2,11 +2,23 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import WeatherCurrent from '../components/WeatherCurrent'
-import WeatherForecast from './WeatherForecast'
+import ExtendedForecast from '../components/ExtendedForecast';
+import WeatherByDay from './WeatherByDay'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 import {isLoaded} from '../reducer/loading'
+import {getDateFormat} from '../share/share';
+import {MULTIPLIER} from '../constants';
 
+/**
+ * Return focused day from forecast list
+ */
+
+const dayOfMonth = (forecast, index) => {
+    let date = getDateFormat(forecast[0].dt, MULTIPLIER)
+    date.setDate(date.getDate() + index)
+    return date.getDate().toString();
+}
 
 class Weather extends Component {
 
@@ -14,10 +26,12 @@ class Weather extends Component {
         weather: PropTypes.object,
         isLoaded: PropTypes.bool,
         current: PropTypes.array,
-        forecast: PropTypes.array
+        focused: PropTypes.number,
+        forecast: PropTypes.object
     }
     render() {
-        const {isLoaded, weather: {error, current, forecast, isInvalid, isLoading} = {}} = this.props
+        const { weather: {error, current, forecast, isInvalid, isLoading, focused} = {}} = this.props
+
         if (isLoading) {
             return (
                 <h2><Loading /></h2>
@@ -30,14 +44,15 @@ class Weather extends Component {
             )
         }
 
-        if ((!current || !forecast) && !isLoaded) {
+        if (!current || !forecast) {
             return null
         }
 
         return (
             <div className="Weather">
                 <WeatherCurrent />
-                <WeatherForecast />
+                <WeatherByDay />
+                <ExtendedForecast forecast={forecast.list} focusedDay={dayOfMonth(forecast.list, focused)}/>
             </div>
         );
     }
